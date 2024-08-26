@@ -37,13 +37,14 @@ public class EmployeeController {
 	public Employee addEmp(@RequestBody Employee employee) {
 		return empService.addEmployee(employee);
 	}
-	
-	// complete the following code 
 
-//	@PutMapping()
-//	updateEmp 
+	@PutMapping("emp")
+	public Employee updateEmp(@RequestBody Employee employee) {
+		return empService.updateEmployee(employee);
+	}
 
-//	@DeleteMapping()
-//	deleteEmpById
-
+	@DeleteMapping("emp/{id}")
+	public Employee deleteEmpById(@PathVariable(name = "id") Integer id) {
+		return empService.deleteEmployee(id);
+	}
 }

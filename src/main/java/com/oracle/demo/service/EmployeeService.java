@@ -3,6 +3,7 @@ package com.oracle.demo.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import com.oracle.demo.model.Employee;
 
@@ -15,37 +16,36 @@ public class EmployeeService implements IEmployeeService {
 	public List<Employee> getAllEmployees() {
 		return empList;
 	}
-	
-//	@Override
-//	public List<Employee> getEmployeeByName(String name) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 
-	// complete the following code 
+	// complete the following code
 
 	@Override
 	public Employee getEmployeeById(Integer id) {
-		// TODO Auto-generated method stub
+		Optional<Employee> empOpt = empList.stream().filter(e -> e.getId().equals(id)).findFirst();
+		if (empOpt.isPresent())
+			return empOpt.get();
 		return null;
 	}
 
 	@Override
 	public Employee addEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-		return null;
+		empList.add(employee);
+		return employee;
 	}
 
 	@Override
 	public Employee updateEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-		return null;
+		empList.set(empList.indexOf(getEmployeeById(employee.getId())), employee);
+
+		return employee;
 	}
 
 	@Override
 	public Employee deleteEmployee(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Employee> empOpt = empList.stream().filter(e -> e.getId().equals(id)).findFirst();
+		if (empOpt.isPresent())
+			empList.remove(empOpt.get());
+		return empOpt.get();
 	}
 
 }
