@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,12 +27,6 @@ public class EmployeeController {
 		return empList;
 	}
 
-////	http://localhost:8080/api/emp/101 
-//	@GetMapping("emp/{id}")
-//	public Employee getEmpById(@PathVariable(name = "id") Integer id) {
-//		return empList.stream().filter(e -> e.getId().equals(id)).findFirst().get();
-//	}
-
 //	http://localhost:8080/api/emp/101 
 	@GetMapping("emp/{id}")
 	public Employee getEmpById(@PathVariable(name = "id") Integer id) {
@@ -39,4 +35,17 @@ public class EmployeeController {
 			return empOptional.get();
 		return null;
 	}
+
+//	http://localhost:8080/api/emp 
+	@PostMapping("emp")
+	public Employee addEmp(@RequestBody Employee employee) {
+		if (empList.add(employee))
+			return employee;
+		return null;
+	}
+
+//	updateEmp 
+
+//	deleteEmpById
+
 }
