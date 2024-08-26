@@ -15,4 +15,10 @@ public class HelloController {
 		return "Hello world!";
 	}
 
+	@GetMapping("/hi")
+	public String hi() {
+		System.out.println("Hi");
+		return "Hi there!";
+	}
+
 }
