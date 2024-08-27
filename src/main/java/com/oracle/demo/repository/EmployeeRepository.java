@@ -11,11 +11,11 @@ import com.oracle.demo.model.Employee;
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	
 //	for basic CRUD operations, no need to write any methods 
-	// INSERT 
-	// UPDATE 
-	// DELETE 
-	// SELECT 
-	// SELECT 
+	// INSERT save() 
+	// UPDATE save() 
+	// DELETE deleteById()
+	// SELECT findAll()
+	// SELECT findById()
 
 //	for business specific operations only, methods need to declared here 
 	
