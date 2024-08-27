@@ -5,8 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.oracle.demo.model.Employee;
 
+@Service
 public class EmployeeService implements IEmployeeService {
 
 	private List<Employee> empList = new ArrayList<>(Arrays.asList(new Employee(101, "Sonu", 90.50),
