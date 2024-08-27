@@ -3,11 +3,10 @@ package com.oracle.demo.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.oracle.demo.model.Employee;
 
-@Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	
 //	for basic CRUD operations, no need to write any methods 
@@ -18,11 +17,30 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	// SELECT findById()
 
 //	for business specific operations only, methods need to declared here 
+
+	// guide -  
+//	https://docs.spring.io/spring-data/jpa/docs/current-SNAPSHOT/reference/html/#jpa.query-methods.query-creation 
 	
 	// 2. use this method 
+
 	public abstract List<Employee> findByName(String name);
 
-//	1/ 
+	public abstract List<Employee> findByNameIgnoreCase(String name);
+
+//	public abstract List<Employee> findBySalary(Double salary);
+
+	public abstract List<Employee> findBySalaryGreaterThan(Double salary);
+	
+	public abstract List<Employee> findBySalaryBetween(Double salary1, Double salary2);
+
+	@Query(value = "select e from Employee e where salary = ?1")
+	public abstract List<Employee> findBySalary(Double salary);
+
+	//	public abstract List<Employee> findByEmail(String email); // CE 
+
+	//	public abstract List<Employee> findByName(String name);
+
+	//	1/ 
 	
 	// re-run your code with - 
 	// remove @Repository

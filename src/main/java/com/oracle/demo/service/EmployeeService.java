@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.oracle.demo.exception.EmployeeNotFoundException;
 import com.oracle.demo.model.Employee;
 import com.oracle.demo.repository.EmployeeRepository;
 
@@ -15,12 +16,12 @@ public class EmployeeService implements IEmployeeService {
 	@Autowired
 	EmployeeRepository empRepository;
 
+	// 2. implement business logic in this class
+
 	@Override
 	public List<Employee> getAllEmployees() {
 		return empRepository.findAll();
 	}
-
-	// complete the following code
 
 	@Override
 	public Employee getEmployeeById(Integer id) {
@@ -28,6 +29,18 @@ public class EmployeeService implements IEmployeeService {
 		if (empOpt.isPresent())
 			return empOpt.get();
 		return null;
+	}
+
+	@Override
+	public List<Employee> getEmployeeByName(String name) {
+		List<Employee> empList = empRepository.findByNameIgnoreCase(name);
+		if (empList.isEmpty()) {
+			String errorMessage = "Employee with the name " + name + " is not found.";
+			System.err.println(errorMessage);
+			throw new EmployeeNotFoundException(errorMessage);
+		} else {
+			return empList;
+		}
 	}
 
 	@Override
@@ -45,10 +58,68 @@ public class EmployeeService implements IEmployeeService {
 		Employee emp = this.getEmployeeById(id);
 		empRepository.deleteById(id);
 		return emp;
-		
+
 	}
 
 }
+
+//package com.oracle.demo.service;
+//
+//import java.util.List;
+//import java.util.Optional;
+//
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Service;
+//
+//import com.oracle.demo.model.Employee;
+//import com.oracle.demo.repository.EmployeeRepository;
+//
+//@Service
+//public class EmployeeService implements IEmployeeService {
+//
+//	@Autowired
+//	EmployeeRepository empRepository;
+//	
+//	// 2. implement business logic in this class 
+//
+//	@Override
+//	public List<Employee> getAllEmployees() {
+//		return empRepository.findAll();
+//	}
+//
+//	@Override
+//	public Employee getEmployeeById(Integer id) {
+//		Optional<Employee> empOpt = empRepository.findById(id);
+//		if (empOpt.isPresent())
+//			return empOpt.get();
+//		return null;
+//	}
+//
+//	@Override
+//	public List<Employee> getEmployeeByName(String name) {
+////		return empRepository.findByName(name);
+//		return empRepository.findByNameIgnoreCase(name);
+//	}
+//
+//	@Override
+//	public Employee addEmployee(Employee employee) {
+//		return empRepository.save(employee);
+//	}
+//
+//	@Override
+//	public Employee updateEmployee(Employee employee) {
+//		return empRepository.save(employee);
+//	}
+//
+//	@Override
+//	public Employee deleteEmployee(Integer id) {
+//		Employee emp = this.getEmployeeById(id);
+//		empRepository.deleteById(id);
+//		return emp;
+//
+//	}
+//
+//}
 
 //package com.oracle.demo.service;
 //

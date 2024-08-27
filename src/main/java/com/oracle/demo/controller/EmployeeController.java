@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oracle.demo.model.Employee;
@@ -39,7 +39,19 @@ public class EmployeeController {
 		return empService.getEmployeeById(id);
 	}
 
-//	http://localhost:8080/api/emp 
+//	http://localhost:8080/api/emp/name/Sonu
+	@GetMapping("emp/name/{name}")
+	public List<Employee> getEmpByName(@PathVariable(name = "name") String name) {
+		return empService.getEmployeeByName(name);
+	}
+
+	@GetMapping("emp2")
+	public List<Employee> getEmpByName2(@RequestParam(name = "name") String name) {
+	    return empService.getEmployeeByName(name);
+	}
+
+	
+	//	http://localhost:8080/api/emp 
 //	@PostMapping("emp")
 	@RequestMapping(method = RequestMethod.POST, path = "emp", consumes = "application/json", produces = "application/json")
 	public Employee addEmp(@RequestBody Employee employee) {
