@@ -8,7 +8,7 @@ public interface IEmployeeService {
 	
 	public abstract List<Employee> getAllEmployees();
 
-//	public abstract List<Employee> getEmployeeByName(String name);
+	public abstract List<Employee> getEmployeeByName(String name);
 
 	public abstract Employee getEmployeeById(Integer id);
 
