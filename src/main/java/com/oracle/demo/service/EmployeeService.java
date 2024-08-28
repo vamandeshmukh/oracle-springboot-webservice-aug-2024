@@ -1,8 +1,6 @@
 package com.oracle.demo.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,19 +14,30 @@ public class EmployeeService implements IEmployeeService {
 	@Autowired
 	EmployeeRepository empRepository;
 
-	// 2. implement business logic in this class
-
 	@Override
 	public List<Employee> getAllEmployees() {
 		return empRepository.findAll();
 	}
 
+//	@Override
+//	public Employee getEmployeeById(Integer id) {
+//		Optional<Employee> empOpt = empRepository.findById(id);
+//		if (empOpt.isPresent())
+//			return empOpt.get();
+//		else {
+//			String errorMessage = "Employee with the id " + id + " is not found.";
+//			System.err.println(errorMessage);
+//			throw new EmployeeNotFoundException(errorMessage);
+//		}
+//	}
+
 	@Override
 	public Employee getEmployeeById(Integer id) {
-		Optional<Employee> empOpt = empRepository.findById(id);
-		if (empOpt.isPresent())
-			return empOpt.get();
-		return null;
+		return empRepository.findById(id).orElseThrow(() -> {
+			String errorMessage = "Employee with the id " + id + " is not found.";
+			System.err.println(errorMessage);
+			return new EmployeeNotFoundException(errorMessage);
+		});
 	}
 
 	@Override
@@ -50,6 +59,7 @@ public class EmployeeService implements IEmployeeService {
 
 	@Override
 	public Employee updateEmployee(Employee employee) {
+		this.getEmployeeById(employee.getId());
 		return empRepository.save(employee);
 	}
 
